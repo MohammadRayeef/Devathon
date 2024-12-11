@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Welcome to Fluxo AI Interview Platform</h1>
+            <h2>Login panel</h2>
+            <form>
+                <div class="textbox">
+                    <input type="email" id="email" placeholder="Email">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="textbox">
+                    <input type="password" id="password" placeholder="Password">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button class="cta-button">Login</button>
+                <a href="index.html">without loging</a>
+                <p>Don't have an account? <a href="register.html">Register</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Add event listener to login button
+        document.querySelector('.submit-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            // Call API to login user
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    // Login successful, redirect to index.html
+                    window.location.href = '/index.html';
+                } 
+                else{
+                    // Login failed, display error message
+                    alert(data.message);
+                }
+                
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        });
+
+    </script>
+</body>
+</html>

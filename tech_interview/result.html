@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 50px;
+        }
+        .result-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            color: #333;
+        }
+        .score {
+            font-size: 1.5em;
+            color: green;
+        }
+        .retry-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .retry-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Test Completed</h1>
+        <p>Your Score:</p>
+        <p class="score" id="score"></p>
+        <p id="result-message"></p>
+        <button class="retry-btn" onclick="window.location.href='index.html'">Retake Test</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Retrieve score and answers from localStorage
+            const score = localStorage.getItem("score");
+            const totalQuestions = localStorage.getItem("totalQuestions");
+            
+            // Display score
+            document.getElementById("score").textContent ='You scored ${score} out of ${totalQuestions}';
+            
+            // Display performance message based on the score
+            let resultMessage = "";
+            if (score >= totalQuestions * 0.8) {
+                resultMessage = "Excellent! Keep up the great work.";
+            } else if (score >= totalQuestions * 0.5) {
+                resultMessage = "Good job! Keep practicing to improve further.";
+            } else {
+                resultMessage = "Don't worry, keep practicing!";
+            }
+            document.getElementById("result-message").textContent = resultMessage;
+        };
+    </script>
+</body>
+</html>

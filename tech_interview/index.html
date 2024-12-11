@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Interview Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <h1 class="logo">Tech Interview</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="admin.html">Admin Panel</a></li>
+                </ul>
+            </nav>
+            <!-- Profile Section -->
+       <div class="profile">
+        <img src="assets/images/profile-picture.png" alt="Profile Picture" class="profile-pic" onclick="toggleDropdown()">
+        <div class="dropdown" id="profileDropdown">
+            <a href="profile.html">View Profile</a>
+            <a href="logout.html">Logout</a>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome to the Advanced Interview Platform</h2>
+                <p>Assess technical skills, behavioral traits, and problem-solving abilities with AI-driven evaluations.</p>
+                <a href="dashboard.html" class="ca-button">Start Interview</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature">
+                <h3>AI-Powered Evaluation</h3>
+                <p>Get real-time analysis of candidates' skills, behavior, and coding quality.</p>
+            </div>
+            <div class="feature">
+                <h3>Behavioral Insights</h3>
+                <p>Understand a candidate's problem-solving abilities and personality.</p>
+            </div>
+            <div class="feature">
+                <h3>Real-Time Monitoring</h3>
+                <p>Track progress and provide live feedback during interviews.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tech Interview Platform | All Rights Reserved</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>

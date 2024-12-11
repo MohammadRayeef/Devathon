@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <header>
+        <div class="navbar">
+            <h1 class="logo">Tech Interview</h1>
+            <nav>
+                <ul>
+                </ul>
+            </nav>
+           <!-- Profile Section -->
+           <div class="profile">
+            <img src="assets/images/profile-picture.png" alt="Profile Picture" class="profile-pic" onclick="toggleDropdown()">
+            <div class="dropdown" id="profileDropdown">
+                <a href="profile.html">View Profile</a>
+                <a href="logout.html">Logout</a>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Test</title>
+    <link rel="stylesheet" href="styles.css">
+    
+            </div>
+    <script>
+        let currentQuestionIndex = 0; // Track the current question
+        const questions = [
+            { question: "What is 5 + 3?", options: ["5", "8", "6", "10"], answer: "8" },
+            { question: "What is 12 * 2?", options: ["24", "20", "22", "26"], answer: "24" },
+            { question: "What is 15 / 3?", options: ["3", "5", "7", "6"], answer: "5" },
+            // Add more questions here
+        ];
+        
+        let userAnswers = []; // Store user's selected answers
+
+        // Timer function
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    nextQuestion(); // Redirect to next question after time runs out
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = question.question;
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = ""; // Clear previous options
+
+            // Display options dynamically
+            question.options.forEach(option => {
+                const optionElement = document.createElement("button");
+                optionElement.textContent = option;
+                optionElement.classList.add("option-button");
+                optionElement.onclick = () => selectAnswer(option);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            // Start timer
+            const timeInMinutes = 1; // 1 minute
+            const display = document.querySelector("#time");
+            startTimer(timeInMinutes * 60, display);
+
+            // Update the button text based on the current question
+            if (currentQuestionIndex === questions.length - 1) {
+                document.getElementById("next-btn").textContent = "Submit";
+                document.getElementById("next-btn").setAttribute("onclick", "submitTest()");
+            } else {
+                document.getElementById("next-btn").textContent = "Next Question";
+                document.getElementById("next-btn").setAttribute("onclick", "nextQuestion()");
+            }
+        }
+
+        function selectAnswer(answer) {
+            userAnswers[currentQuestionIndex] = answer; // Store the selected answer
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion(); // Load next question
+            }
+        }
+
+        function submitTest() {
+            let score = 0;
+
+            // Compare user's answers with correct answers
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].answer) {
+                    score++;
+                }
+            }
+
+            // Store score in localStorage
+            localStorage.setItem("score", score);
+            window.location.href = "result.html"; // Redirect to results page
+        }
+
+        window.onload = function () {
+            loadQuestion(); // Load the first question when page loads
+        };
+    </script>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Aptitude Test</h1>
+        <p>Time Left: <span id="time">01:00</span></p>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+    </div>
+</body>
+</html>

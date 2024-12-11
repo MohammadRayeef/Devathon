@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge - Tech Interview Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/loader.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="navbar">
+        <h1 class="logo">Tech Interview</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="admin.html">Admin Panel</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="coding-challenge">
+        <h2>Coding Challenge</h2>
+        <p>Solve the following problem:</p>
+        <pre id="code-container"></pre>
+        <script src="scripts.js"></script>
+<script>
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' } });
+    require(['vs/editor/editor.main'], function() {
+        monaco.editor.create(document.getElementById('code-container'), {
+            value: `def hello_world():
+    print("Hello, world!")`,
+            language: 'python',
+            theme: 'vs-dark',
+            automaticLayout: true
+        });
+    });
+</script>
+</body>
+</html>
+        
+        <button id="submit-code" class="submit-btn">Submit Code</button>
+    </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Tech Interview Platform | All Rights Reserved</p>
+</footer>
+

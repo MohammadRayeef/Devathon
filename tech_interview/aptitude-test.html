@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <header>
+        <div class="navbar">
+            <h1 class="logo">Tech Interview</h1>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="styles.css">
+            <nav>
+                <ul>
+                </ul>
+            </nav>
+           <!-- Profile Section -->
+           <div class="profile">
+            <img src="assets/images/profile-picture.png" alt="Profile Picture" class="profile-pic" onclick="toggleDropdown()">
+            <div class="dropdown" id="profileDropdown">
+                <a href="profile.html">View Profile</a>
+                <a href="logout.html">Logout</a>
+                </div>
+
+<body>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>logical reasononing Test</title>
+    <style>
+        /* Basic styles for the test */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .test-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        #options {
+            margin: 20px 0;
+        }
+        .option-button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .option-button:hover {
+            background-color: #e1e1e1;
+        }
+        .selected {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #next-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #next-btn:hover {
+            background-color: #0056b3;
+        }
+        #time {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Quantitative Aptitude Test</h1>
+        <p>Time Left: <span id="time">01:00</span></p>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        const questions = [
+            {
+                question: "What is the value of 15 + 25?",
+                options: ["35", "45", "50", "40"],
+                answer: "40"
+            },
+            {
+                question: "If a train travels 60 km in 1 hour, how far will it travel in 3 hours?",
+                options: ["180 km", "150 km", "120 km", "100 km"],
+                answer: "180 km"
+            },
+            {
+                question: "What is 20% of 150?",
+                options: ["25", "30", "20", "35"],
+                answer: "30"
+            },
+            {
+                question: "A man buys a shirt for $200 and sells it for $250. What is the profit percentage?",
+                options: ["20%", "15%", "25%", "30%"],
+                answer: "25%"
+            },
+            {
+                question: "Solve for x: 3x + 7 = 22",
+                options: ["x = 5", "x = 6", "x = 4", "x = 3"],
+                answer: "x = 5"
+            }
+        ];
+
+        let userAnswers = [];
+
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    nextQuestion(); // Move to the next question after time runs out
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = question.question;
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = ""; // Clear previous options
+
+            // Display options dynamically
+            question.options.forEach(option => {
+                const optionElement = document.createElement("button");
+                optionElement.textContent = option;
+                optionElement.classList.add("option-button");
+                optionElement.onclick = () => selectAnswer(option);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            const selectedAnswer = userAnswers[currentQuestionIndex];
+            if (selectedAnswer) {
+                optionsContainer.querySelectorAll('button').forEach(button => {
+                    if (button.textContent === selectedAnswer) {
+                        button.classList.add('selected');
+                    }
+                });
+            }
+
+            // Start timer
+            const timeInMinutes = 1;
+            const display = document.querySelector("#time");
+            startTimer(timeInMinutes * 60, display);
+
+            // Update the button text based on the current question
+            const nextButton = document.getElementById("next-btn");
+            if (currentQuestionIndex === questions.length - 1) {
+                nextButton.textContent = "Submit";
+                nextButton.setAttribute("onclick", "submitTest()");
+            } else {
+                nextButton.textContent = "Next Question";
+                nextButton.setAttribute("onclick", "nextQuestion()");
+            }
+        }
+
+        function selectAnswer(answer) {
+            userAnswers[currentQuestionIndex] = answer;
+
+            // Update selected option visually
+            const options = document.querySelectorAll(".option-button");
+            options.forEach(option => option.classList.remove('selected'));
+            const selectedButton = [...options].find(option => option.textContent === answer);
+            selectedButton.classList.add('selected');
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        function submitTest() {
+            let score = 0;
+
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].answer) {
+                    score++;
+                }
+            }
+
+            // Show results
+            alert(`Your score is ${score} out of ${questions.length}`);
+        }
+
+        window.onload = function () {
+            loadQuestion(); // Load the first question when page loads
+        };
+    </script>
+</body>
+</html>
